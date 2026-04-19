@@ -160,5 +160,6 @@ func (disk *DiskManager) WritePage(page *Page) (int, error) {
 		return 0, fmt.Errorf("Could not write page %d: %w", page.PageId, err)
 	}
 
+	// disk.Sync() -> test_result_page_sync.txt
 	return n, nil
 }
