@@ -1,24 +1,24 @@
 
 === FileStorage (100 pages) ===
-  Write: 8.975325ms  (11141.66 pages/sec)
-  Read:  369.794µs  (270420.83 pages/sec)
+  Write: 7.045997ms  (14192.46 pages/sec)
+  Read:  388.503µs  (257398.27 pages/sec)
 
 === MmapStorage (100 pages) ===
-  Write: 7.213665ms  (13862.58 pages/sec)
-  Read:  185.715µs  (538459.47 pages/sec)
+  Write: 6.993363ms  (14299.27 pages/sec)
+  Read:  35.802µs  (2793140.05 pages/sec)
 
 === FileStorage (1000 pages) ===
-  Write: 21.064175ms  (47473.97 pages/sec)
-  Read:  2.895374ms  (345378.52 pages/sec)
+  Write: 19.676367ms  (50822.39 pages/sec)
+  Read:  3.383838ms  (295522.42 pages/sec)
 
 === MmapStorage (1000 pages) ===
-  Write: 16.679711ms  (59953.08 pages/sec)
-  Read:  1.309575ms  (763606.51 pages/sec)
+  Write: 16.908398ms  (59142.21 pages/sec)
+  Read:  77.029µs  (12982123.62 pages/sec)
 
 === FileStorage (10000 pages) ===
-  Write: 150.450997ms  (66466.82 pages/sec)
-  Read:  31.48087ms  (317653.23 pages/sec)
+  Write: 150.38445ms  (66496.24 pages/sec)
+  Read:  29.928858ms  (334125.68 pages/sec)
 
 === MmapStorage (10000 pages) ===
-  Write: 117.28315ms  (85263.74 pages/sec)
-  Read:  26.052312ms  (383843.09 pages/sec)
+  Write: 115.661474ms  (86459.21 pages/sec)
+  Read:  793.546µs  (12601663.92 pages/sec)

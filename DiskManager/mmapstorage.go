@@ -103,6 +103,16 @@ func (ms *MmapStorage) WriteAt(buf []byte, offset int64) (int, error) {
 	return n, nil
 }
 
+// ReadDirect returns a slice directly into the mmap region — zero allocation, zero copy.
+// The returned slice is only valid until the next remap or Close.
+func (ms *MmapStorage) ReadDirect(offset int64, length int) ([]byte, error) {
+	end := offset + int64(length)
+	if end > ms.fileSize {
+		return nil, fmt.Errorf("read beyond mapped region: offset %d, len %d, mapped %d", offset, length, ms.fileSize)
+	}
+	return ms.data[offset:end], nil
+}
+
 func (ms *MmapStorage) Sync() error {
 	return unix.Msync(ms.data, unix.MS_SYNC)
 }

@@ -109,6 +109,20 @@ func (disk *DiskManager) ReadPage(pageId uint64) (*Page, error) {
 		return nil, fmt.Errorf("PageID overflow: offset %d >= size %d", offSet, size)
 	}
 
+	// Zero-copy path: if storage supports direct reads (mmap),
+	// return a slice into the mapped region — no alloc, no copy.
+	if dr, ok := disk.storage.(DirectReader); ok {
+		data, err := dr.ReadDirect(int64(offSet), PageSize)
+		if err != nil {
+			return nil, fmt.Errorf("Could not direct-read at offset %d: %w", offSet, err)
+		}
+		return &Page{
+			PageId: pageId,
+			Data:   data,
+		}, nil
+	}
+
+	// Fallback: allocate buffer and copy (FileStorage path).
 	readBuff := make([]byte, PageSize)
 
 	_, err = disk.storage.ReadAt(readBuff, int64(offSet))
@@ -144,10 +158,6 @@ func (disk *DiskManager) WritePage(page *Page) (int, error) {
 	n, err := disk.storage.WriteAt(page.Data, int64(offSet))
 	if err != nil {
 		return 0, fmt.Errorf("Could not write page %d: %w", page.PageId, err)
-	}
-
-	if page.IsSet(PAGE_DIRTY_BIT) {
-		disk.dirtyPages = append(disk.dirtyPages, page)
 	}
 
 	return n, nil
